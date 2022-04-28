@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-module Reporting
-  VERSION = "0.1.0"
+module Path
+  module Reporting
+    VERSION = "0.1.1"
+  end
 end
