@@ -8,11 +8,11 @@ TODO: Delete this and the text above, and describe your gem
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add reporting
+    $ bundle add path-reporting
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install reporting
+    $ gem install path-reporting
 
 ## Usage
 
@@ -26,4 +26,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/reporting.
+Bug reports and pull requests are welcome on GitHub at https://github.com/pathccm/reporting.

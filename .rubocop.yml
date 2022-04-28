@@ -9,5 +9,22 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Metrics/BlockLength:
+  IgnoredMethods:
+    # rspec tests are expected to be long
+    - describe
+    - context
+
+Metrics/MethodLength:
+  IgnoredMethods:
+    # `record` is long because we format it to be more readable
+    - record
+    # `scrub_pii` is long both to be more readable and also because it
+    # is difficult to break up reasonably and keep it easy to understand
+    - scrub_pii
+
+Metrics/ParameterLists:
+  Max: 7
+
 Layout/LineLength:
-  Max: 120
+  Max: 200
