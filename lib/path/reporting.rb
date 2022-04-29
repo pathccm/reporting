@@ -52,7 +52,7 @@ module Path
       def analytics
         raise Error, "Must call init on Path::Reporting library before using" unless @initialized
 
-        @analyitcs
+        @analytics
       end
 
       # Resets the module to an uninitialized state. Mostly used for testing
@@ -60,7 +60,7 @@ module Path
       def reset!
         @initialized = false
         @config = nil
-        @analyitcs = nil
+        @analytics = nil
         self
       end
     end
