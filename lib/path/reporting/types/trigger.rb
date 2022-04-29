@@ -32,7 +32,7 @@ module Path
         # Check if a given item is a valid Trigger
         # @param maybe_trigger [Any] item to check
         def valid?(maybe_trigger)
-          triggers.includes? maybe_trigger
+          triggers.include? maybe_trigger
         end
       end
     end
