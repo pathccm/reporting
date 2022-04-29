@@ -137,7 +137,7 @@ module Path
       #    )
       #
       #    analytics_reported.each do |status|
-      #      Rails.logger.warn("#{status.reporter} failed") unless status.result.nil?
+      #      Rails.logger.warn("#{status.reporter} failed") unless status[:result].nil?
       #    end
       #
       # @raise [StandardError] if no user is provided or user does not have id
@@ -146,8 +146,8 @@ module Path
       #
       # @return [Array] An array of result hashes with two keys:
       #
-      #     - `reporter` [String] the analytics reporter the result is for
-      #     - `result` [nil | StandardError] what the result of running this
+      #     - `:reporter` [String] the analytics reporter the result is for
+      #     - `:result` [nil | StandardError] what the result of running this
       #        reporter was. If it did not run, it will always be `nil`
       #
       # @see https://docs.google.com/document/d/1axnk1EkKCb__sxtvMomrPNup3wsviDOAefQWwXU3Z3U/edit# Analytics Guide
