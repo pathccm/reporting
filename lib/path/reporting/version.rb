@@ -3,6 +3,6 @@
 module Path
   module Reporting
     # Current version of the module
-    VERSION = "0.1.3"
+    VERSION = "0.1.4"
   end
 end
