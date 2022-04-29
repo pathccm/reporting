@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "reporters/amplitude"
-require_relative "reporters/console"
-require_relative "../types/trigger"
-require_relative "../types/user_type"
+require_relative "analytics/amplitude"
+require_relative "analytics/console"
+require_relative "types/trigger"
+require_relative "types/user_type"
 
 module Path
   module Reporting

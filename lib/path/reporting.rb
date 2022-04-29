@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "analytics/analytics"
-require_relative "configuration"
+require_relative "reporting/analytics"
+require_relative "reporting/configuration"
 require_relative "reporting/version"
 
 # Path is just a wrapper module so we can group any path specific gems under
