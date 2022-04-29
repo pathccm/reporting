@@ -122,7 +122,7 @@ module Path
       #     product_area: Constants::ANALYTICS_PRODUCT_AREA_MATCHING,
       #     name: 'Preferred provider multiple valid matches',
       #     user: @contact.analytics_friendly_hash,
-      #     user_type: PathReporting::UserType.PATIENT,
+      #     user_type: PathReporting::UserType::PATIENT,
       #     trigger: PathReporting::Trigger.PAGE_VIEW,
       #     metadata: analytics_metadata,
       #   )
@@ -132,7 +132,7 @@ module Path
       #      product_area: Constants::ANALYTICS_PRODUCT_AREA_MATCHING,
       #      name: 'No preferred provider',
       #      user: @contact.analytics_friendly_hash,
-      #      user_type: PathReporting::UserType.PATIENT,
+      #      user_type: PathReporting::UserType::PATIENT,
       #      trigger: PathReporting::Trigger.PAGE_VIEW,
       #    )
       #
@@ -158,8 +158,8 @@ module Path
         product_area:,
         name:,
         user:,
-        user_type: UserType.PATIENT,
-        trigger: Trigger.INTERACTION,
+        user_type: UserType::PATIENT,
+        trigger: Trigger::INTERACTION,
         metadata: {}
       )
         throw Error("No user provided when reporting analytics") if !user || !user[:id]

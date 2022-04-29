@@ -42,8 +42,8 @@ Path::Reporting.analytics.record(
   product_area: Constants::ANALYTICS_PRODUCT_AREA_MATCHING,
   name: 'Preferred provider multiple valid matches',
   user: @contact.analytics_friendly_hash,
-  user_type: Path::Reporting::UserType.PATIENT,
-  trigger: Path::Reporting::Trigger.PAGE_VIEW,
+  user_type: Path::Reporting::UserType::PATIENT,
+  trigger: Path::Reporting::Trigger::PAGE_VIEW,
   metadata: analytics_metadata,
 )
 ```
