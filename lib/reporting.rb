@@ -12,6 +12,7 @@ module Path
   # meant to be a one-stop shop for all of our ruby code to import and have
   # everything they need to track all the things
   module Reporting
+    # @private
     class Error < StandardError; end
 
     class << self

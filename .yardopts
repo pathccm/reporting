@@ -1,1 +1,1 @@
---no-private --plugin rspec
+--no-private --plugin rspec -m markdown --title="Path Reporting"

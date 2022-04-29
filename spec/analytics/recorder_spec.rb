@@ -20,12 +20,12 @@ RSpec.describe Path::Reporting::Analytics do
     end
 
     context "when amplitude is turned on" do
-      let(:amplitude_channel) { instance_double(Path::Reporting::Analytics::Channels::Amplitude) }
+      let(:amplitude_channel) { instance_double(Path::Reporting::Analytics::Amplitude) }
 
       before do
         allow(config).to receive("amplitude_enabled?").and_return(true)
         allow(config).to receive("console_enabled?").and_return(false)
-        allow(Path::Reporting::Analytics::Channels::Amplitude).to receive("new").and_return(amplitude_channel)
+        allow(Path::Reporting::Analytics::Amplitude).to receive("new").and_return(amplitude_channel)
         recorder.instance_variable_set "@clients", nil
       end
 
@@ -33,12 +33,12 @@ RSpec.describe Path::Reporting::Analytics do
     end
 
     context "when console is turned on" do
-      let(:console_channel) { instance_double(Path::Reporting::Analytics::Channels::Console) }
+      let(:console_channel) { instance_double(Path::Reporting::Analytics::Console) }
 
       before do
         allow(config).to receive("amplitude_enabled?").and_return(false)
         allow(config).to receive("console_enabled?").and_return(true)
-        allow(Path::Reporting::Analytics::Channels::Console).to receive("new").and_return(console_channel)
+        allow(Path::Reporting::Analytics::Console).to receive("new").and_return(console_channel)
         recorder.instance_variable_set "@clients", nil
       end
 
@@ -46,14 +46,14 @@ RSpec.describe Path::Reporting::Analytics do
     end
 
     context "when amplitude and console are turned on" do
-      let(:amplitude_channel) { instance_double(Path::Reporting::Analytics::Channels::Amplitude) }
-      let(:console_channel) { instance_double(Path::Reporting::Analytics::Channels::Console) }
+      let(:amplitude_channel) { instance_double(Path::Reporting::Analytics::Amplitude) }
+      let(:console_channel) { instance_double(Path::Reporting::Analytics::Console) }
 
       before do
         allow(config).to receive("amplitude_enabled?").and_return(true)
         allow(config).to receive("console_enabled?").and_return(true)
-        allow(Path::Reporting::Analytics::Channels::Amplitude).to receive("new").and_return(amplitude_channel)
-        allow(Path::Reporting::Analytics::Channels::Console).to receive("new").and_return(console_channel)
+        allow(Path::Reporting::Analytics::Amplitude).to receive("new").and_return(amplitude_channel)
+        allow(Path::Reporting::Analytics::Console).to receive("new").and_return(console_channel)
         recorder.instance_variable_set "@clients", nil
       end
 
@@ -72,10 +72,9 @@ RSpec.describe Path::Reporting::Analytics do
   end
 
   describe "#record" do
-    let(:console_channel) { instance_double(Path::Reporting::Analytics::Channels::Console) }
+    let(:console_channel) { instance_double(Path::Reporting::Analytics::Console) }
 
     before { recorder.instance_variable_set "@clients", { 'amplitude': nil, 'console': console_channel } }
-    before { allow(console_channel).to receive(:channel_name).and_return("Console") }
     before { allow(Path::Reporting::Trigger).to receive(:valid?).and_return(true) }
     before { allow(Path::Reporting::UserType).to receive(:valid?).and_return(true) }
 
@@ -98,8 +97,10 @@ RSpec.describe Path::Reporting::Analytics do
         )
       end
 
+      let(:error_to_raise) { StandardError.new "test" }
+
       it "passes along all values them" do
-        expect(console_channel).to receive(:record).and_raise(StandardError)
+        expect(console_channel).to receive(:record).and_raise(error_to_raise)
         results = recorder.record(
           product_code: "rspec",
           product_area: "recorder test",
@@ -108,7 +109,10 @@ RSpec.describe Path::Reporting::Analytics do
           user_type: "rspec",
           trigger: "auto"
         )
-        expect(results[:exceptions]["Console"]).to be_a(StandardError)
+        expect(results).to contain_exactly(
+          { reporter: "amplitude", result: nil },
+          { reporter: "console", result: error_to_raise }
+        )
       end
     end
   end

@@ -2,15 +2,10 @@
 
 require "spec_helper"
 
-RSpec.describe Path::Reporting::Analytics::Channels::Amplitude do
+RSpec.describe Path::Reporting::Analytics::Amplitude do
   let(:analytics_config) { instance_double(Path::Reporting::Analytics::Configuration) }
   let(:channel) { described_class }
   let(:simple_config_input) { instance_double(Path::Reporting::Analytics::Configuration, "amplitude_config" => {}) }
-
-  describe "@channel_name" do
-    let(:channel_instance) { described_class.new simple_config_input }
-    specify { expect(channel_instance.channel_name).to eq("Amplitude") }
-  end
 
   describe "#initialize" do
     let(:input_config) { { 'api_key': "test", 'abc': "easy as 123" } }

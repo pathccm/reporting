@@ -4,6 +4,7 @@ require_relative "analytics/configuration"
 
 module Path
   module Reporting
+    # Global configuration for all reporting sub-modules
     # @!attribute [r] analytics
     #   @return [Analytics::Configuration] the configuration for analytics reporting
     class Configuration
