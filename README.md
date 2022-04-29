@@ -37,13 +37,13 @@ After initialing the module, record an analytics event with the following code.
 
 ```ruby
 
-PathReporting.analytics.record(
+Path::Reporting.analytics.record(
   product_code: Constants::ANALYTICS_PRODUCT_CODE,
   product_area: Constants::ANALYTICS_PRODUCT_AREA_MATCHING,
   name: 'Preferred provider multiple valid matches',
   user: @contact.analytics_friendly_hash,
-  user_type: PathReporting::UserType.PATIENT,
-  trigger: PathReporting::Trigger.PAGE_VIEW,
+  user_type: Path::Reporting::UserType.PATIENT,
+  trigger: Path::Reporting::Trigger.PAGE_VIEW,
   metadata: analytics_metadata,
 )
 ```
