@@ -6,11 +6,16 @@ module Path
     class Trigger
       class << self
         # Interaction: When a direct intentional user action is the cause of
-        # this event
+        # this event that is not a simple navigation. E.g. Submitted form or
+        # changed password
         INTERACTION = "Interaction"
         # Page view: When the event was an indirect result of viewing something.
+        # E.g. auto-assigning a provider or appointment because the user has an
+        # existing provider already
         # @note Because of usage limits, we do not want to record page views
-        #   as a separate action, this is only for indirect consequences
+        #   as a separate action, this is only for indirect consequences that
+        #   result in a change in something either for the user or for our
+        #   systems
         PAGE_VIEW = "Page view"
         # Automation: Some automation or tool was the cause of this event
         AUTOMATION = "Automation"
