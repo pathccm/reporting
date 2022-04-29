@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/reporting/version"
+require_relative "lib/path/reporting/version"
 
 Gem::Specification.new do |spec|
   spec.name = "path-reporting"
