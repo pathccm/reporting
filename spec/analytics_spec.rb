@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Path::Reporting::Analytics do
-  let(:config) { instance_double(Path::Reporting::Analytics::Configuration) }
+  let(:config) { instance_double(Path::Reporting::Configuration, analytics: analytics_config) }
+  let(:analytics_config) { instance_double(Path::Reporting::Analytics::Configuration) }
   let(:recorder) { described_class.new config }
 
   describe "#clients" do
@@ -11,8 +12,8 @@ RSpec.describe Path::Reporting::Analytics do
 
     context "when no clients are configured" do
       before do
-        allow(config).to receive("amplitude_enabled?").and_return(false)
-        allow(config).to receive("console_enabled?").and_return(false)
+        allow(analytics_config).to receive("amplitude_enabled?").and_return(false)
+        allow(analytics_config).to receive("console_enabled?").and_return(false)
         recorder.instance_variable_set "@clients", nil
       end
 
@@ -23,8 +24,8 @@ RSpec.describe Path::Reporting::Analytics do
       let(:amplitude_channel) { instance_double(Path::Reporting::Analytics::Amplitude) }
 
       before do
-        allow(config).to receive("amplitude_enabled?").and_return(true)
-        allow(config).to receive("console_enabled?").and_return(false)
+        allow(analytics_config).to receive("amplitude_enabled?").and_return(true)
+        allow(analytics_config).to receive("console_enabled?").and_return(false)
         allow(Path::Reporting::Analytics::Amplitude).to receive("new").and_return(amplitude_channel)
         recorder.instance_variable_set "@clients", nil
       end
@@ -36,8 +37,8 @@ RSpec.describe Path::Reporting::Analytics do
       let(:console_channel) { instance_double(Path::Reporting::Analytics::Console) }
 
       before do
-        allow(config).to receive("amplitude_enabled?").and_return(false)
-        allow(config).to receive("console_enabled?").and_return(true)
+        allow(analytics_config).to receive("amplitude_enabled?").and_return(false)
+        allow(analytics_config).to receive("console_enabled?").and_return(true)
         allow(Path::Reporting::Analytics::Console).to receive("new").and_return(console_channel)
         recorder.instance_variable_set "@clients", nil
       end
@@ -50,8 +51,8 @@ RSpec.describe Path::Reporting::Analytics do
       let(:console_channel) { instance_double(Path::Reporting::Analytics::Console) }
 
       before do
-        allow(config).to receive("amplitude_enabled?").and_return(true)
-        allow(config).to receive("console_enabled?").and_return(true)
+        allow(analytics_config).to receive("amplitude_enabled?").and_return(true)
+        allow(analytics_config).to receive("console_enabled?").and_return(true)
         allow(Path::Reporting::Analytics::Amplitude).to receive("new").and_return(amplitude_channel)
         allow(Path::Reporting::Analytics::Console).to receive("new").and_return(console_channel)
         recorder.instance_variable_set "@clients", nil

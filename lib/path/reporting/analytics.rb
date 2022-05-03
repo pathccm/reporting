@@ -36,14 +36,14 @@ module Path
       # @private
       def setup_amplitude
         # Amplitude reporting for metrics
-        return Path::Reporting::Analytics::Amplitude.new @config if @config.amplitude_enabled?
+        return Path::Reporting::Analytics::Amplitude.new @config if @config.analytics.amplitude_enabled?
 
         nil
       end
 
       # @private
       def setup_console
-        return Path::Reporting::Analytics::Console.new @config if @config.console_enabled?
+        return Path::Reporting::Analytics::Console.new @config if @config.analytics.console_enabled?
 
         nil
       end
@@ -162,9 +162,9 @@ module Path
         trigger: Trigger::INTERACTION,
         metadata: {}
       )
-        throw Error("No user provided when reporting analytics") if !user || !user[:id]
-        throw Error("Invalid UserType #{user_type}") unless UserType.valid?(user_type)
-        throw Error("Invalid Trigger #{trigger}") unless Trigger.valid?(trigger)
+        throw Error.new("No user hash provided when reporting analytics") if !user.is_a?(Hash) || !(user[:id] || user['id'])
+        throw Error.new("Invalid UserType #{user_type}") unless UserType.valid?(user_type)
+        throw Error.new("Invalid Trigger #{trigger}") unless Trigger.valid?(trigger)
 
         clients.map do |reporter, client|
           {
@@ -185,7 +185,6 @@ module Path
       # @private
       def send_event_to_client(client, event)
         client&.record(**event)
-        nil
       rescue StandardError => e
         e
       end

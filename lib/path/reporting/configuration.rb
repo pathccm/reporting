@@ -9,6 +9,7 @@ module Path
     #   @return [Analytics::Configuration] the configuration for analytics reporting
     class Configuration
       attr_reader :analytics
+      attr_accessor :system_name
 
       # Create a new configuration. Sub configuration's will be used by the
       # various reporting sections.

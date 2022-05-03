@@ -44,7 +44,7 @@ module Path
         # @return [Hash] amplitude configuration options as passed along to the amplitude-api gem
         # @see https://www.rubydoc.info/gems/amplitude-api/AmplitudeAPI/Config AmplitudeAPI::Config
         def amplitude_config=(conf)
-          @amplitude_enabled = !conf.nil?
+          @amplitude_enabled = !(conf.nil? || conf.empty?)
           @amplitude_config = conf
         end
 
