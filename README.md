@@ -1,22 +1,54 @@
-# Reporting
+# Path Reporting
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/reporting`. To experiment with that code, run `bin/console` for an interactive prompt.
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pathccm/reporting/Ruby?style=flat-square) ![Gem](https://img.shields.io/gem/v/path-reporting?style=flat-square) ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/rubygems/path-reporting?style=flat-square) ![GitHub](https://img.shields.io/github/license/pathccm/reporting?style=flat-square)
 
-TODO: Delete this and the text above, and describe your gem
+The one stop shop for reporting at [Path](https://pathmentalhealth.com)
+
+This gem contains (or will contain) all the various types of reporting we need
+to do at Path. From metrics to analytics to performance and beyond, this gem
+is meant to enable us to report anything we need as simply as possible.
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add reporting
+    $ bundle add path-reporting
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install reporting
+    $ gem install path-reporting
 
 ## Usage
 
-TODO: Write usage instructions here
+First you will need to initialize and configure the module
+
+```ruby
+Path::Reporting.init do |config|
+  config.analytics.logger = Rails.logger
+end
+```
+
+See [our Configuration docs](https://www.rubydoc.info/gems/path-reporting/Path/Reporting/Configuration)
+for more information on how to configure this module
+
+### Analytics
+
+After initialing the module, record an analytics event with the following code.
+
+```ruby
+
+Path::Reporting.analytics.record(
+  product_code: Constants::ANALYTICS_PRODUCT_CODE,
+  product_area: Constants::ANALYTICS_PRODUCT_AREA_MATCHING,
+  name: 'Preferred provider multiple valid matches',
+  user: @contact.analytics_friendly_hash,
+  user_type: Path::Reporting::UserType::PATIENT,
+  trigger: Path::Reporting::Trigger::PAGE_VIEW,
+  metadata: analytics_metadata,
+)
+```
+
+Be sure to read our [Analytics Guide (Internal Doc)](https://docs.google.com/document/d/1axnk1EkKCb__sxtvMomrPNup3wsviDOAefQWwXU3Z3U/edit#)
 
 ## Development
 
@@ -26,4 +58,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/reporting.
+Bug reports and pull requests are welcome on GitHub at https://github.com/pathccm/reporting.
