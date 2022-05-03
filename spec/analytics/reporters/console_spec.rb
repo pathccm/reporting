@@ -11,7 +11,7 @@ RSpec.describe Path::Reporting::Analytics::Console do
     let(:logger) { double }
 
     before do
-      allow(config).to receive(:logger).and_return(logger)
+      allow(analytics_config).to receive(:logger).and_return(logger)
     end
 
     context "given the correct required arguments" do

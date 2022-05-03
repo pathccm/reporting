@@ -48,10 +48,9 @@ RSpec.describe Path::Reporting::Analytics::Amplitude do
 
     it "report event to Amplitude using the API" do
       expect(AmplitudeAPI::Event).to receive(:new).with({
-                                                          'event_properties': { 'trigger': "test" },
+                                                          'event_properties': { 'system_name': 'test', 'trigger': "test" },
                                                           'event_type': "Test_event",
                                                           'user_id': "1",
-                                                          'system_name': 'test',
                                                           'user_properties': { 'id': 1, 'user_type': "runner" }
                                                         }).and_return(api_event)
       expect(AmplitudeAPI).to receive(:track).with(api_event).and_return(response)
