@@ -10,7 +10,7 @@ module Path
         # @param config [Analytics::Configuration] the configuration for the reporter
         # @see Analytics::Configuration
         def initialize(config)
-          @config = config
+          @config = config.analytics
         end
 
         # Log the analytics event to the configured logger

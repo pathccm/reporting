@@ -23,6 +23,10 @@ Metrics/MethodLength:
     # is difficult to break up reasonably and keep it easy to understand
     - scrub_pii
 
+Metrics/AbcSize:
+  IgnoredMethods:
+    - record
+
 Metrics/ParameterLists:
   Max: 7
 

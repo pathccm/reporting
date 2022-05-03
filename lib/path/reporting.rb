@@ -43,7 +43,7 @@ module Path
         @config = Configuration.new
         yield(@config) if block_given?
 
-        @analytics = Path::Reporting::Analytics.new @config.analytics
+        @analytics = Path::Reporting::Analytics.new @config
         self
       end
 

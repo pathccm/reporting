@@ -3,14 +3,15 @@
 require "spec_helper"
 
 RSpec.describe Path::Reporting::Analytics::Console do
-  let(:config) { instance_double(Path::Reporting::Analytics::Configuration) }
+  let(:config) { instance_double(Path::Reporting::Configuration, analytics: analytics_config) }
+  let(:analytics_config) { instance_double(Path::Reporting::Analytics::Configuration) }
   let(:channel) { described_class.new config }
 
   describe "#record" do
     let(:logger) { double }
 
     before do
-      allow(config).to receive(:logger).and_return(logger)
+      allow(analytics_config).to receive(:logger).and_return(logger)
     end
 
     context "given the correct required arguments" do

@@ -57,6 +57,8 @@ module Path
     class Analytics
       # Amplitude analytics is our primary analytics channel for production
       class Amplitude
+        attr_reader :config
+
         # Setup and configure AmplitudeAPI with the given configuration
         # @param config [AmplitudeAPI::Config] the configuration for AmplitudeAPI
         # @see https://www.rubydoc.info/gems/amplitude-api/AmplitudeAPI/Config AmplitudeAPI::Config Documentation
@@ -64,7 +66,7 @@ module Path
         def initialize(config)
           @config = config
 
-          config.amplitude_config.each do |key, value|
+          config.analytics.amplitude_config.each do |key, value|
             AmplitudeAPI.config.instance_variable_set("@#{key}", value)
           end
         end
@@ -81,9 +83,10 @@ module Path
           metadata = metadata.dup
           user[:user_type] = user_type
           metadata[:trigger] = trigger
+          metadata[:system_name] = config.system_name
 
           event_props = {
-            user_id: user[:id].to_s,
+            user_id: (user[:id] || user["id"]).to_s,
             user_properties: scrub_pii(user),
             event_type: name,
             event_properties: scrub_pii(metadata)
@@ -92,7 +95,10 @@ module Path
             event_props[key] = metadata[key] if metadata.key? key
           end
 
-          AmplitudeAPI.track AmplitudeAPI::Event.new event_props
+          response = AmplitudeAPI.track AmplitudeAPI::Event.new event_props
+          raise Error, response.body unless response.success?
+
+          response
         end
 
         # Scrub known PII keys from a hash
@@ -117,6 +123,8 @@ module Path
 
           data
         end
+
+        class Error < StandardError; end
       end
     end
   end
