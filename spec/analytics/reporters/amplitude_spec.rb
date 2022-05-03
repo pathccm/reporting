@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Path::Reporting::Analytics::Amplitude do
-  let(:config) { instance_double(Path::Reporting::Configuration, analytics: analytics_config, system_name: 'test') }
+  let(:config) { instance_double(Path::Reporting::Configuration, analytics: analytics_config, system_name: "test") }
   let(:analytics_config) { instance_double(Path::Reporting::Analytics::Configuration) }
   let(:channel) { described_class }
 
@@ -48,7 +48,7 @@ RSpec.describe Path::Reporting::Analytics::Amplitude do
 
     it "report event to Amplitude using the API" do
       expect(AmplitudeAPI::Event).to receive(:new).with({
-                                                          'event_properties': { 'system_name': 'test', 'trigger': "test" },
+                                                          'event_properties': { 'system_name': "test", 'trigger': "test" },
                                                           'event_type': "Test_event",
                                                           'user_id': "1",
                                                           'user_properties': { 'id': 1, 'user_type': "runner" }

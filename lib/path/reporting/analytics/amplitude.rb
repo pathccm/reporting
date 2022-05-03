@@ -86,17 +86,18 @@ module Path
           metadata[:system_name] = config.system_name
 
           event_props = {
-            user_id: (user[:id] || user['id']).to_s,
+            user_id: (user[:id] || user["id"]).to_s,
             user_properties: scrub_pii(user),
             event_type: name,
-            event_properties: scrub_pii(metadata),
+            event_properties: scrub_pii(metadata)
           }
           API_METADATA_TO_ELEVATE.each do |key|
             event_props[key] = metadata[key] if metadata.key? key
           end
 
           response = AmplitudeAPI.track AmplitudeAPI::Event.new event_props
-          raise Error.new(response.body) unless response.success?
+          raise Error, response.body unless response.success?
+
           response
         end
 
@@ -122,7 +123,8 @@ module Path
 
           data
         end
-      class Error < StandardError; end
+
+        class Error < StandardError; end
       end
     end
   end
