@@ -116,5 +116,33 @@ RSpec.describe Path::Reporting::Analytics do
         )
       end
     end
+
+    context "given neither a user device id nor user id" do
+      specify do
+        expect do
+          recorder.record(product_code: "rspec", product_area: "recorder test", name: "test run", user: {})
+        end.to raise_error Path::Reporting::Error, "No user hash provided when reporting analytics"
+      end
+    end
+
+    context "given just a user device id" do
+      it "passes along all values them" do
+        expect(console_channel).to receive(:record).with(
+          trigger: "auto",
+          name: "RSPEC_RecorderTest_Test_run",
+          user: { 'device_id': 1 },
+          user_type: "rspec",
+          metadata: {}
+        )
+        recorder.record(
+          product_code: "rspec",
+          product_area: "recorder test",
+          name: "test run",
+          user: { 'device_id': 1 },
+          user_type: "rspec",
+          trigger: "auto"
+        )
+      end
+    end
   end
 end

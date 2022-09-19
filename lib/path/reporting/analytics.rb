@@ -162,9 +162,9 @@ module Path
         trigger: Trigger::INTERACTION,
         metadata: {}
       )
-        throw Error.new("No user hash provided when reporting analytics") if !user.is_a?(Hash) || !(user[:id] || user["id"])
-        throw Error.new("Invalid UserType #{user_type}") unless UserType.valid?(user_type)
-        throw Error.new("Invalid Trigger #{trigger}") unless Trigger.valid?(trigger)
+        raise Error, "No user hash provided when reporting analytics" if !user.is_a?(Hash) || !(user[:id] || user["id"] || user[:device_id] || user["device_id"])
+        raise Error, "Invalid UserType #{user_type}" unless UserType.valid?(user_type)
+        raise Error, "Invalid Trigger #{trigger}" unless Trigger.valid?(trigger)
 
         clients.map do |reporter, client|
           {
