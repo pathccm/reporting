@@ -23,6 +23,16 @@ Metrics/MethodLength:
     # is difficult to break up reasonably and keep it easy to understand
     - scrub_pii
 
+Metrics/CyclomaticComplexity:
+  IgnoredMethods:
+    # `record` is too complex mostly due to safety checks and not core logic
+    - record
+
+Metrics/PerceivedComplexity:
+  IgnoredMethods:
+    # `record` is too complex mostly due to safety checks and not core logic
+    - record
+
 Metrics/AbcSize:
   IgnoredMethods:
     - record
