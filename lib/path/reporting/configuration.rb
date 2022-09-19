@@ -7,6 +7,8 @@ module Path
     # Global configuration for all reporting sub-modules
     # @!attribute [r] analytics
     #   @return [Analytics::Configuration] the configuration for analytics reporting
+    # @!attribute system_name
+    #   @return [String] the name of the service using this module
     class Configuration
       attr_reader :analytics
       attr_accessor :system_name

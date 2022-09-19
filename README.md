@@ -24,6 +24,7 @@ First you will need to initialize and configure the module
 
 ```ruby
 Path::Reporting.init do |config|
+  config.system_name = 'my_system_name'
   config.analytics.logger = Rails.logger
 end
 ```

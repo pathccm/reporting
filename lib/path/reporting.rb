@@ -30,18 +30,23 @@ module Path
       #
       # @example Basic analytics setup
       #   Path::Reporting.init do |config|
+      #     config.system_name = 'my_system_name'
       #     config.analytics.logger = Rails.logger
       #   end
-      # @example If no configuration is needed, you still need to call this method
-      #   Path::Reporting.init
+      # @example If no configuration is needed, you still need to set the system name
+      #   Path::Reporting.init do |config|
+      #     config.system_name = 'my_system_name'
+      #   end
       # @yieldparam config [Configuration] the Configuration object to set any and all configuration on
       # @return [self]
+      # @raise StandardError if `system_name` is not set
       # @see Configuration
       # @see Analytics::Configuration
       def init
         @initialized = true
         @config = Configuration.new
-        yield(@config) if block_given?
+        yield(@config)
+        raise Error, "Need to set system_name in Reporting config" if @config.system_name.nil?
 
         @analytics = Path::Reporting::Analytics.new @config
         self
