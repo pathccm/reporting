@@ -61,5 +61,21 @@ RSpec.describe Path::Reporting::Analytics::Amplitude do
         user_type: "runner"
       )
     end
+
+    it "report event with device_id only to Amplitude using the API" do
+      expect(AmplitudeAPI::Event).to receive(:new).with({
+                                                          'event_properties': { 'system_name': "test", 'trigger': "test" },
+                                                          'event_type': "Test_event",
+                                                          'device_id': "1",
+                                                          'user_properties': { 'device_id': 1, 'user_type': "runner" }
+                                                        }).and_return(api_event)
+      expect(AmplitudeAPI).to receive(:track).with(api_event).and_return(response)
+      channel_instance.record(
+        trigger: "test",
+        name: "Test_event",
+        user: { 'device_id': 1 },
+        user_type: "runner"
+      )
+    end
   end
 end
