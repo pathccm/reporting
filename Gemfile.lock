@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    path-reporting (0.2.1)
+    path-reporting (0.2.2)
       amplitude-api
 
 GEM
