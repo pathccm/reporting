@@ -86,11 +86,12 @@ module Path
           metadata[:system_name] = config.system_name
 
           event_props = {
-            user_id: (user[:id] || user["id"]).to_s,
             user_properties: scrub_pii(user),
             event_type: name,
             event_properties: scrub_pii(metadata)
           }
+          event_props[:user_id] = (user[:id] || user["id"]).to_s unless (user[:id] || user["id"]).nil?
+          event_props[:device_id] = (user[:device_id] || user["device_id"]).to_s unless (user[:device_id] || user["device_id"]).nil?
           API_METADATA_TO_ELEVATE.each do |key|
             event_props[key] = metadata[key] if metadata.key? key
           end
