@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    path-reporting (0.2.2)
+    path-reporting (0.2.3)
       amplitude-api
 
 GEM
@@ -61,6 +61,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
