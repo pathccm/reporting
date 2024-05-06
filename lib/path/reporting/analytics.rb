@@ -115,6 +115,8 @@ module Path
       #   recoreded (e.g. a page view, or an interaction).
       # @param metadata [Hash] Metadata to report alongside the analytics event.
       #    **This should not contain any PII or PHI*
+      # @param use_raw_event_name [boolean] If true, uses just name for the event name.
+      #   Otherwise it will be formated to code_area_name
       #
       # @example
       #   PathReporting.analytics.record(
@@ -154,23 +156,26 @@ module Path
       # @see Reporting::UserType
       # @see Reporting::Trigger
       def record(
-        product_code:,
-        product_area:,
         name:,
         user:,
+        product_code: "",
+        product_area: "",
         user_type: UserType::PATIENT,
         trigger: Trigger::INTERACTION,
-        metadata: {}
+        metadata: {},
+        use_raw_event_name: false
       )
         raise Error, "No user hash provided when reporting analytics" if !user.is_a?(Hash) || !(user[:id] || user["id"] || user[:device_id] || user["device_id"])
         raise Error, "Invalid UserType #{user_type}" unless UserType.valid?(user_type)
         raise Error, "Invalid Trigger #{trigger}" unless Trigger.valid?(trigger)
 
+        full_name = use_raw_event_name ? name : format_event_name(product_code: product_code, product_area: product_area, name: name)
+
         clients.map do |reporter, client|
           {
             reporter: reporter.to_s,
             result: send_event_to_client(client, {
-                                           name: format_event_name(product_code: product_code, product_area: product_area, name: name),
+                                           name: full_name,
                                            user: user,
                                            user_type: user_type,
                                            metadata: metadata,

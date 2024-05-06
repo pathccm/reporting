@@ -98,6 +98,25 @@ RSpec.describe Path::Reporting::Analytics do
         )
       end
 
+      it "does not format name if using raw event name" do
+        expect(console_channel).to receive(:record).with(
+          trigger: "auto",
+          name: "test_run",
+          user: { 'id': 1 },
+          user_type: "rspec",
+          metadata: {}
+        )
+        recorder.record(
+          product_code: "rspec",
+          product_area: "recorder test",
+          name: "test_run",
+          user: { 'id': 1 },
+          user_type: "rspec",
+          trigger: "auto",
+          use_raw_event_name: true
+        )
+      end
+
       let(:error_to_raise) { StandardError.new "test" }
 
       it "passes along all values them" do
